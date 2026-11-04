@@ -12,7 +12,10 @@ jobs:
       - uses: actions/checkout@v4
       - run: cmake -B build
       - run: cmake --build build --config Release --parallel
+      - name: Lister les plugins compilés
+        run: Get-ChildItem -Path build -Recurse -Filter *.vst3 | Select-Object FullName
       - uses: actions/upload-artifact@v4
         with:
-          name: SnapCompressRR-VST3-Windows
-          path: build/SnapCompressRR_artefacts/Release/VST3/
+          name: Plugin-VST3-Windows
+          path: build/*_artefacts/Release/VST3/
+          if-no-files-found: error
